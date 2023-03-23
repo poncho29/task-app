@@ -1,11 +1,10 @@
-import { Typography } from "@mui/material"
-
 import { TaskLayout } from "../layout/TaskLayout"
-
+import { NoteView, NothingSelectedView } from "../views"
 export const TaskPage = () => {
   return (
     <TaskLayout>
-      <Typography>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore fuga facere et animi corrupti. Debitis placeat illo nesciunt sequi odio corporis excepturi labore iusto veniam saepe voluptas, tempore, cum officia.</Typography>
+      {/* <NothingSelectedView /> */}
+      <NoteView />
     </TaskLayout>
   )
 }

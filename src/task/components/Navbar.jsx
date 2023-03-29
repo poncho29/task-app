@@ -1,13 +1,13 @@
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material"
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material"
 
-export const Navbar = ({ drawerWidth = 240 }) => {
+export const Navbar = ({ drawerWidth = 240, onToggleMenu }) => {
   return (
     <AppBar
       position='fixed'
       sx={{
         width: {sm: `calc(100% - ${drawerWidth}px)`},
-        ml: {sm: `${drawerWidth}px`}
+        // ml: {sm: `${drawerWidth}px`}
       }}
     >
       <Toolbar>
@@ -15,6 +15,7 @@ export const Navbar = ({ drawerWidth = 240 }) => {
           edge='start'
           color='inherit'
           sx={{ mr: 2, diplay: {sm: 'none'} }}
+          onClick={onToggleMenu}
         >
           <MenuOutlined />
         </IconButton>

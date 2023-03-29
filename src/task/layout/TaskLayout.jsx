@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Box, Toolbar } from "@mui/material"
 
 import { Navbar } from "../components/Navbar"
@@ -6,11 +7,22 @@ import { Sidebar } from "../components/Sidebar"
 const drawerWidth = 240
 
 export const TaskLayout = ({ children }) => {
+  const [togglMenu, setTogglMenu] = useState(true);
+
+  const onToggleMenu = () => {
+    setTogglMenu(!togglMenu)
+  }
+
   return (
     <Box sx={{display: 'flex'}}>
-      <Navbar drawerWidth={drawerWidth} />
+      <Navbar
+        drawerWidth={togglMenu ? drawerWidth : 0}
+        onToggleMenu={onToggleMenu}
+      />
 
-      <Sidebar drawerWidth={drawerWidth} />
+      { togglMenu &&
+        <Sidebar drawerWidth={drawerWidth} />
+      }
 
       <Box
         component='main'

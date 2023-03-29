@@ -43,7 +43,7 @@ export const Sidebar = ({ drawerWidth = 240 }) => {
         <List>
           {
             ['Home', 'Completed', 'Profile'].map(text => (
-              <ListItem>
+              <ListItem key={text}>
                 <ListItemButton>
                   <ListItemIcon>
                     <TurnedInNot />

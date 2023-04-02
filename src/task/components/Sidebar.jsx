@@ -1,4 +1,4 @@
-import { TurnedInNot } from "@mui/icons-material"
+import { TurnedInNot, MenuOutlined } from "@mui/icons-material"
 import {
   Drawer,
   Box,
@@ -10,33 +10,38 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Grid
+  Grid,
+  IconButton
 } from "@mui/material"
 
-export const Sidebar = ({ drawerWidth = 240 }) => {
+export const Sidebar = ({ toggleMenu, onToggleMenu }) => {
   return (
     <Box
+      width='240px'
       component='nav'
-      sx={{
-        width: {sm: drawerWidth},
-        flexShrink: {sm: 0}
-      }}
     >
       <Drawer
         open
         variant='permanent' // temporary
-        sx={{
-          display: {xs: 'block'},
+        sx={{          
           '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: drawerWidth 
+            width: '240px',
+            boxSizing: 'border-box'
           }
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{display: 'flex', gap: '.5rem'}}>
           <Typography noWrap variant='h6' component='div'>
             Sebastian Meneses
           </Typography>
+          <IconButton
+            edge='start'
+            color='inherit'
+            onClick={onToggleMenu}
+            sx={{display: { md: 'none' }}}
+          >
+            <MenuOutlined />
+          </IconButton>
         </Toolbar>
         <Divider />
 

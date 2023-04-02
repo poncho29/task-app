@@ -4,29 +4,37 @@ import { Box, Toolbar } from "@mui/material"
 import { Navbar } from "../components/Navbar"
 import { Sidebar } from "../components/Sidebar"
 
-const drawerWidth = 240
-
 export const TaskLayout = ({ children }) => {
-  const [togglMenu, setTogglMenu] = useState(true);
+  const [toggleMenu, setTogglMenu] = useState(true);
 
   const onToggleMenu = () => {
-    setTogglMenu(!togglMenu)
+    setTogglMenu(!toggleMenu)
   }
 
   return (
-    <Box sx={{display: 'flex'}}>
+    <Box sx={{display: {md: 'flex'}}}>
       <Navbar
-        drawerWidth={togglMenu ? drawerWidth : 0}
+        toggleMenu={toggleMenu}
         onToggleMenu={onToggleMenu}
       />
 
-      { togglMenu &&
-        <Sidebar drawerWidth={drawerWidth} />
-      }
+      <Box          
+        sx={{
+          display: {
+            xs: `${toggleMenu && 'none'}`,
+            md: `${toggleMenu && 'block'}`,
+          } 
+        }}
+      >
+        <Sidebar
+          toggleMenu={toggleMenu}
+          onToggleMenu={onToggleMenu}
+        />
+      </Box>
 
       <Box
         component='main'
-        sx={{ flexGrow: 1, p: 3 }}
+        sx={{ flexGrow: 1, p: '22px' }}
       >
         <Toolbar></Toolbar>
 

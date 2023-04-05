@@ -25,7 +25,6 @@ export const useAuthStore = () => {
 
     try {
       const { data } = await taskApi.post('/auth/login', {username, password});
-      console.log(data)
       localStorage.setItem('userTask', JSON.stringify(data.user));
       localStorage.setItem('tokenTask', `Bearer ${data.token}`);
       dispatch(login(data.user))

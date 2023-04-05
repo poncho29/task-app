@@ -1,4 +1,8 @@
-import { TurnedInNot, MenuOutlined } from "@mui/icons-material"
+import { NavLink } from "react-router-dom";
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import { MenuOutlined } from "@mui/icons-material"
 import {
   Drawer,
   Box,
@@ -51,14 +55,24 @@ export const Sidebar = ({ onToggleMenu }) => {
 
         <List>
           {
-            ['Home', 'Completed', 'Profile'].map(text => (
-              <ListItem key={text}>
+            routes.map((item) => (
+              <ListItem
+                key={item.name}
+                to={item.path}
+                component={NavLink}
+              >
                 <ListItemButton>
                   <ListItemIcon>
-                    <TurnedInNot />
+                    { item.name === 'Home' ? <CollectionsBookmarkIcon/>
+                      : item.name === 'Complete' ? <FactCheckIcon/> 
+                      : <AccountBoxIcon/>
+                    }
                   </ListItemIcon>
                   <Grid container>
-                    <ListItemText primary={text}/>
+                    <ListItemText
+                      primary={item.name}
+                      sx={{ color: 'black' }}
+                    />
                   </Grid>
                 </ListItemButton>
               </ListItem>
@@ -69,3 +83,9 @@ export const Sidebar = ({ onToggleMenu }) => {
     </Box>
   )
 }
+
+const routes = [
+  { path: '/', name: 'Home' },
+  { path: '/complete', name: 'Complete' },
+  { path: '/profile', name: 'Profile' },
+]

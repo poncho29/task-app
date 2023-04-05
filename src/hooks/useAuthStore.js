@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 
 import taskApi from "../api";
@@ -8,12 +9,25 @@ export const useAuthStore = () => {
   const dispatch = useDispatch();
   const { status, user, errorMessage } = useSelector(state => state.auth);
 
+  useEffect(() => {
+    const userStorage = JSON.parse(localStorage.getItem('userTask'));
+    const tokenStorage = localStorage.getItem('tokenTask');
+
+    if (userStorage && tokenStorage) {
+      dispatch(login(userStorage));
+    } else {
+      dispatch(logout());
+    }
+  }, [])
+
   const startLogin = async ({ username, password }) => {
     dispatch(checkingCredentials());
 
     try {
       const { data } = await taskApi.post('/auth/login', {username, password});
-      localStorage.setItem('tokenTask', data.token);
+      console.log(data)
+      localStorage.setItem('userTask', JSON.stringify(data.user));
+      localStorage.setItem('tokenTask', `Bearer ${data.token}`);
       dispatch(login(data.user))
     } catch (error) {
       dispatch(logout('Credenciales incorrectas'));

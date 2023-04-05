@@ -8,5 +8,13 @@ const taskApi = axios.create({
 })
 
 // Configurar interceptores
+taskApi.interceptors.request.use(config => {
+  config.headers = {
+    ...config.headers,
+    'token': localStorage.getItem('tokenTask')
+  }
+
+  return config;
+})
 
 export default taskApi;

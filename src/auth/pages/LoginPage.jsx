@@ -1,30 +1,35 @@
 import { useMemo } from "react"
-import { Google } from "@mui/icons-material"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { Link as RouterLink } from "react-router-dom"
-import { Button, Grid, Link, TextField, Typography } from "@mui/material"
+import { Button, Grid, Link, TextField } from "@mui/material"
 
 import { useForm } from "../../hooks/useForm"
-import { checkingAuthentication } from "../../store/auth"
+import { useAuthStore } from "../../hooks/useAuthStore"
 
 import { AuthLayout } from "../layout/AuthLayout"
 
-export const LoginPage = () => {
-  const dispatch = useDispatch();
+const loginForm = {
+  email: "",
+  password: ""
+}
 
+export const LoginPage = () => {
+  // REDUX
   const { status } = useSelector(state => state.auth);
 
-  const { email, password, onInputChange } = useForm({
-    email: "", password: ""
-  });
+  // CUSTOM HOOKS
+  const { startLogin } = useAuthStore()
+  const { email, password, onInputChange } = useForm(loginForm);
 
+  // MEMOS
   const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
+  // FUNCTIONS
   const onSubmit = (event) => {
     event.preventDefault();
 
-    console.log({ email, password })
-    dispatch(checkingAuthentication())
+    // console.log({ email, password });
+    startLogin({ username: email, password });
   }
 
   return (
@@ -72,12 +77,6 @@ export const LoginPage = () => {
                 Entrar
               </Button>
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-              <Button fullWidth variant="contained" onClick={onGoogleSingIn}>
-                <Google />
-                <Typography sx={{ml: 1}}>Google</Typography>
-              </Button>
-            </Grid> */}
           </Grid>
 
           <Grid

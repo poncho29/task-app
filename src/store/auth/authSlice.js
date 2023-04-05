@@ -4,34 +4,34 @@ export const authSlice = createSlice({
   name: 'name',
   initialState: {
     status: 'no-authenticated',
-    emial: null,
-    name: null,
-    token: null,
-    errorMessage: null
+    user: {},
+    errorMessage: undefined
   },
   reducers: {
     login: (state, { payload }) => {
       state.status = 'authenticated';
-      state.emial = payload.emial;
-      state.name = payload.name;
-      state.token = payload.token;
-      state.errorMessage = null;
+      state.user = payload,
+      state.errorMessage = undefined;
     },
 
-    logut: (state, { payload }) => {
+    logout: (state, { payload }) => {
       state.status = 'no-authenticated';
-      state.emial = null
-      state.name = null
-      state.token = null
-      state.errorMessage = payload.errorMessage;
+      state.user = {},
+      state.errorMessage = payload;
     },
 
     checkingCredentials: (state) => {
       state.status = "checking";
+      state.user = {},
+      state.errorMessage = undefined;
     },
+
+    clearErrorMessage: (state) => {
+      state.errorMessage = undefined
+    }
   }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { login, logut, checkingCredentials } = authSlice.actions;
+export const { login, logout, checkingCredentials, clearErrorMessage } = authSlice.actions;

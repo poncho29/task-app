@@ -1,5 +1,6 @@
-import { useMemo } from "react"
+import Swal from "sweetalert2"
 import { useSelector } from "react-redux"
+import { useEffect, useMemo } from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { Button, Grid, Link, TextField } from "@mui/material"
 
@@ -15,7 +16,7 @@ const loginForm = {
 
 export const LoginPage = () => {
   // REDUX
-  const { status } = useSelector(state => state.auth);
+  const { status, errorMessage } = useSelector(state => state.auth);
 
   // CUSTOM HOOKS
   const { startLogin } = useAuthStore()
@@ -23,6 +24,13 @@ export const LoginPage = () => {
 
   // MEMOS
   const isAuthenticating = useMemo(() => status === 'checking', [status]);
+
+  // EFFECTS
+  useEffect(() => {
+    if (errorMessage !== undefined) {
+      Swal.fire('Ups, algo fallo al iniciar sesión', errorMessage, 'error')
+    }
+  }, [errorMessage])
 
   // FUNCTIONS
   const onSubmit = (event) => {

@@ -1,8 +1,11 @@
-import { useState } from "react"
+import Swal from "sweetalert2"
+import { useSelector } from "react-redux"
+import { useEffect, useMemo, useState } from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { Button, Grid, Link, TextField, Typography } from "@mui/material"
 
 import { useForm } from "../../hooks/useForm"
+import { useAuthStore } from "../../hooks/useAuthStore"
 
 import { AuthLayout } from "../layout/AuthLayout"
 
@@ -19,10 +22,29 @@ const formValidations = {
 }
 
 export const RegisterPage = () => {
+  // HOOKS
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // CUSTOM HOOKS
+  const { startRegister } = useAuthStore();  
+
+  // REDUX
+  const { status, errorMessage } = useSelector(state => state.auth);
+
+  // FORMS
   const { formState, errors, isFormValid, onInputChange } = useForm(formData, formValidations);
 
+  // MEMOS
+  const isAuthenticating = useMemo(() => status === 'checking', [status]);
+
+  // EFFECTS
+  useEffect(() => {
+    if (errorMessage !== undefined) {
+      Swal.fire('Ups, algo fallo en el registro', errorMessage, 'error')
+    }
+  }, [errorMessage])
+
+  // FUNCTIONS
   const onSubmit = (event) => {
     event.preventDefault();
     if (!isFormValid) {
@@ -30,7 +52,7 @@ export const RegisterPage = () => {
       return
     }
 
-    console.log(formState);
+    startRegister(formState)
   }
 
   return (
@@ -91,6 +113,7 @@ export const RegisterPage = () => {
                 fullWidth
                 type="submit"
                 variant="contained"
+                disabled={isAuthenticating}
               >
                 Crear cuenta
               </Button>

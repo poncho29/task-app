@@ -23,6 +23,20 @@ export const useAuthStore = () => {
     }
   }
 
+  const startRegister = async ({ name, email, password }) => {
+    dispatch(checkingCredentials());
+
+    try {
+      const { data } = await taskApi.post('/users', {name, email, password});
+      dispatch(login(data.user))
+    } catch (error) {
+      dispatch(logout('Correo electrónico está en uso'));
+      setTimeout(() => {
+        dispatch(clearErrorMessage())
+      }, 10)
+    }
+  }
+
   return {
     // Propiedades
     user,
@@ -30,6 +44,7 @@ export const useAuthStore = () => {
     errorMessage,
 
     // Métodos
-    startLogin
+    startLogin,
+    startRegister
   }
 }

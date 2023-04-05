@@ -51,6 +51,12 @@ export const useAuthStore = () => {
     }
   }
 
+  const startLogout = () => {
+    localStorage.removeItem('userTask');
+    localStorage.removeItem('tokenTask');
+    dispatch(logout());    
+  }
+
   return {
     // Propiedades
     user,
@@ -59,6 +65,7 @@ export const useAuthStore = () => {
 
     // Métodos
     startLogin,
-    startRegister
+    startRegister,
+    startLogout
   }
 }

@@ -1,7 +1,11 @@
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material"
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material"
 
+import { useAuthStore } from "../../hooks/useAuthStore"
+
 export const Navbar = ({ toggleMenu, onToggleMenu }) => {
+  const { startLogout } = useAuthStore();
+
   return (
     <AppBar
       width='100%'
@@ -42,7 +46,7 @@ export const Navbar = ({ toggleMenu, onToggleMenu }) => {
             My Tasks
           </Typography>
 
-          <IconButton color="error">
+          <IconButton color="error" onClick={startLogout}>
             <LogoutOutlined />
           </IconButton>
         </Grid>

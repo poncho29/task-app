@@ -14,7 +14,11 @@ import {
   IconButton
 } from "@mui/material"
 
-export const Sidebar = ({ toggleMenu, onToggleMenu }) => {
+import { useAuthStore } from "../../hooks/useAuthStore";
+
+export const Sidebar = ({ onToggleMenu }) => {
+  const { user } = useAuthStore();
+  
   return (
     <Box
       width='240px'
@@ -32,7 +36,7 @@ export const Sidebar = ({ toggleMenu, onToggleMenu }) => {
       >
         <Toolbar sx={{display: 'flex', gap: '.5rem'}}>
           <Typography noWrap variant='h6' component='div'>
-            Sebastian Meneses
+            { user.name }
           </Typography>
           <IconButton
             edge='start'
